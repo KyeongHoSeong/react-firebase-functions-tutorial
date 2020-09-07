@@ -22,11 +22,21 @@ const app = express();
 
 
 app.get('/screams', (request, response) => {
-  admin.firestore().collection('screams').get()
+  admin
+    .firestore()
+    .collection('screams')
+    .orderBy('createdAt', 'desc')
+    .get()
     .then(data => {
       let screams = [];
       data.forEach(doc => {
-        screams.push(doc.data());
+        //screams.push(doc.data());
+        screams.push({
+          screamId: doc.id,
+          body: doc.data().body,
+          userHandle: doc.data().userHandle,
+          createdAt: doc.data().createdAt
+        });
       });
       return response.json(screams);
     })
@@ -38,15 +48,39 @@ app.get('/screams', (request, response) => {
 
 
 
-exports.createScream = functions.https.onRequest((request, response) => {
-  if(request.method !== 'POST'){
-    return response.status(400).json({error: "Method not allowed"});
-  }
+// exports.createScream = functions.https.onRequest((request, response) => {
+//   if(request.method !== 'POST'){
+//     return response.status(400).json({error: "Method not allowed"});
+//   }
 
+//   const newScream = {
+//     body: request.body.body,
+//     userHandle: request.body.userHandle,
+//     createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+//   };
+
+//   admin
+//     .firestore()
+//     .collection("screams")
+//     .add(newScream)
+//     .then((doc) => {
+//       response.json({ message: `document ${doc.id} cteated successfully` });
+//     })
+//     .catch((err) => {
+//       response.status(500).json({ error: "something went wrong" });
+//       console.error(err);
+//     });
+// });
+
+
+
+
+app.post('/scream', (request, response) => {
   const newScream = {
     body: request.body.body,
     userHandle: request.body.userHandle,
-    createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+    //createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+    uceatedAt: new Date().toISOString()
   };
 
   admin
@@ -63,4 +97,5 @@ exports.createScream = functions.https.onRequest((request, response) => {
 });
 
 // https://baseurl.com/api/getScreams
-exports.api = functions.https.onRequest(app);
+//exports.api = functions.https.onRequest(app);
+exports.api = functions.region('asia-northeast3').https.onRequest(app);
