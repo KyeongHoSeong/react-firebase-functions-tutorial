@@ -12,7 +12,6 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 exports.getScreams = functions.https.onRequest((request, response) => {
-
   admin.firestore().collection('screams').get()
     .then(data => {
       let screams = [];
@@ -22,6 +21,30 @@ exports.getScreams = functions.https.onRequest((request, response) => {
       return response.json(screams);
     })
     .catch(err => {
+      console.error(err);
+    });
+});
+
+exports.createScream = functions.https.onRequest((request, response) => {
+  if(request.method !== 'POST'){
+    return response.status(400).json({error: "Method not allowed"});
+  }
+
+  const newScream = {
+    body: request.body.body,
+    userHandle: request.body.userHandle,
+    createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+  };
+
+  admin
+    .firestore()
+    .collection("screams")
+    .add(newScream)
+    .then((doc) => {
+      response.json({ message: `document ${doc.id} cteated successfully` });
+    })
+    .catch((err) => {
+      response.status(500).json({ error: "something went wrong" });
       console.error(err);
     });
 });
