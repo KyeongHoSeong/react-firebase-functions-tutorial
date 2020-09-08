@@ -1,25 +1,27 @@
 const {db} = require ('../utils/admin')
 
-exports.getAllScreams = (req, res) => {
-  db.collection("screams")
-    .orderBy("createdAt", "desc")
+exports.getAllScreams = (request, response) => {
+  db
+    .collection('screams')
+    .orderBy('createdAt', 'desc')
     .get()
-    .then((data) => {
+    .then(data => {
       let screams = [];
-      data.forEach((doc) => {
+      data.forEach(doc => {
         //screams.push(doc.data());
         screams.push({
           screamId: doc.id,
           body: doc.data().body,
           userHandle: doc.data().userHandle,
-          createdAt: doc.data().createdAt,
+          createdAt: doc.data().createdAt
         });
       });
-      return res.json(screams);
+      return response.json(screams);
     })
-    .catch((err) => console.error(err));
-};
-
+    .catch(err => {
+      console.error(err);
+    });
+}
 
 // post data
 /* at test
@@ -28,28 +30,27 @@ exports.getAllScreams = (req, res) => {
     "userHandle" : "userHadle4"
 }
 */
-exports.postOneScream = (req, res) => {
+exports.postOneScream = (request, response) => {
 
-    if(req.body.body.trim() === ""){
-        return res.status(400).json({body: 'Body must not be empty'})
-    }
-
-  const newScreams = {
-    body: req.body.body,
-    //userHandle: req.body.userHandle,
-    userHandle: req.user.handle,// passed through FBAuth
-    //createdAt: admin.firestore.Timestamp.fromDate(new Date())
-    createdAt: new Date().toISOString(),
+  if(request.body.body.trim() === '') {
+    return response.status(400).json({ body: "body must not be empty"});
+  }
+  const newScream = {
+    body: request.body.body,
+    //userHandle: request.body.userHandle,
+    userHandle: request.user.handle,
+    //createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+    uceatedAt: new Date().toISOString()
   };
 
   db
     .collection("screams")
-    .add(newScreams)
+    .add(newScream)
     .then((doc) => {
-      res.json({ message: `document ${doc.id} created successfully` });
+      response.json({ message: `document ${doc.id} cteated successfully` });
     })
     .catch((err) => {
-      res.status(500).json({ eror: "something went wrong" });
+      response.status(500).json({ error: "something went wrong" });
       console.error(err);
     });
 }
