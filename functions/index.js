@@ -16,7 +16,6 @@ const firebaseConfig = {
 };
 
 
-
 const firebase = require('firebase');
 firebase.initializeApp(firebaseConfig);
 
@@ -47,10 +46,53 @@ app.get('/screams', (request, response) => {
 }) 
 
 
-app.post('/scream', (request, response) => {
+const FBAuth = (request, response, next) => {
+  let idToken;
+  if (
+    request.headers.authorization &&
+    request.headers.authorization.startsWith("Bearer ")
+  ) {
+    idToken = request.headers.authorization.split("Bearer ")[1];
+  } else {
+    console.error("No token found");
+    return response.status(403).json({ error: "Unauthorized" });
+  }
+
+  admin
+    .auth()
+    .verifyIdToken(idToken)
+    .then((decodedToken) => {
+      // auth...uid
+      request.user = decodedToken;
+      console.log(decodedToken);
+      return db
+        .collection("users")
+        .where('userId', '==', request.user.uid)
+        .limit(1)
+        .get();
+    })
+    .then((data) => {
+      request.user.handle = data.docs[0].data().handle;
+      return next();
+    })
+    .catch((err) => {
+      console.error("Error while verifying token", err);
+      return response.status(403).json(err);
+    });
+};
+
+
+
+// Post one scream
+app.post('/scream', FBAuth, (request, response) => {
+  if(request.body.body.trim() === '') {
+    return response.status(400).json({body: 'Body must not be empty'});
+  }
   const newScream = {
     body: request.body.body,
-    userHandle: request.body.userHandle,
+    //FBAuth
+    //userHandle: request.body.userHandle,
+    userHandle: request.user.handle,
     //createdAt: admin.firestore.Timestamp.fromDate(new Date()),
     uceatedAt: new Date().toISOString()
   };
@@ -184,6 +226,5 @@ app.post('/login', (request, response) => {
       }
     });
 });
-
 
 exports.api = functions.region('asia-northeast3').https.onRequest(app);
