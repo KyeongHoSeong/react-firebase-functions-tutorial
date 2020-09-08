@@ -1,18 +1,36 @@
 const functions = require('firebase-functions');
-
 const app = require('express')();
-
 const FBAuth = require('./utils/fbAuth');
 
-const { getAllscreams, postOneScream } = require('./handlers/screams');
-const { signup, login } = require('./handlers/users');
+const {
+  getAllScreams,
+  postOneScream,
+  //getScream,
+} = require("./handlers/screams");
 
-//scream routes
-app.get('/screams', getAllscreams) 
-app.post('/scream', FBAuth, postOneScream);
+const {
+  signup,
+  login,
+  //uploadImage,
+  // addUserDetails,
+  // getAuthenticatedUser,
+} = require("./handlers/users");
 
-//users route
-app.post('/signup', signup);
+// scream route
+app.get("/screams", getAllScreams);
+app.post("/scream", FBAuth, postOneScream);
+//app.get('/scream/:screamId', getScream);
+//TODO: delete ascream
+//TODO: like a scream
+//TODO: unlike a scream
+//TODO: comment on scream
+
+// Users Route
+app.post("/signup", signup);
 app.post('/login', login);
+// //app.post('/user/image', FBAuth, uploadImage);
+// app.post('/user', FBAuth, addUserDetails); 
+// app.get('/user', FBAuth, getAuthenticatedUser); 
 
-exports.api = functions.region('asia-northeast3').https.onRequest(app);
+//exports.api = functions.https.onRequest(app);
+exports.api = functions.region('asia-northeast3').https.onRequest(app); 
