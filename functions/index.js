@@ -4,8 +4,17 @@ const app = require('express')();
 
 admin.initializeApp();
 
-const firebaseConfig = {
-  
+const 
+  firebaseConfig = {
+    apiKey: "AIzaSyCysldo30CtHr2GqAGnBKhkh8dEfxDDlO0",
+    authDomain: "firereact-f2000.firebaseapp.com",
+    databaseURL: "https://firereact-f2000.firebaseio.com",
+    projectId: "firereact-f2000",
+    storageBucket: "firereact-f2000.appspot.com",
+    messagingSenderId: "436517320273",
+    appId: "1:436517320273:web:b808a7ad1d8bef2d186a70",
+    measurementId: "G-H63ZZWD2JM"
+ 
 };
 
 
@@ -39,41 +48,43 @@ app.get('/screams', (request, response) => {
 }) 
 
 
-const FBAuth = (request, response, next) => {
+//middle ware
+// if login then ...write data, etc...
+const FBAuth = (req, res, next) => {
   let idToken;
-  if (
-    request.headers.authorization &&
-    request.headers.authorization.startsWith("Bearer ")
-  ) {
-    idToken = request.headers.authorization.split("Bearer ")[1];
-  } else {
-    console.error("No token found");
-    return response.status(403).json({ error: "Unauthorized" });
-  }
+ if( // Refer to JWT
+  req.headers.authorization && 
+  req.headers.authorization.startsWith('Bearer ') 
+ ) {
+     idToken = req.headers.authorization.split('Bearer ')[1];
+ } else {
+     console.error('No token found');
+     return res.status(403).json({ error: 'Unauthorized' });
+ }
 
-  admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then((decodedToken) => {
-      // auth...uid
-      request.user = decodedToken;
-      console.log(decodedToken);
-      return db
-        .collection("users")
-        .where('userId', '==', request.user.uid)
-        .limit(1)
-        .get();
-    })
-    .then((data) => {
-      request.user.handle = data.docs[0].data().handle;
-      return next();
-    })
-    .catch((err) => {
-      console.error("Error while verifying token", err);
-      return response.status(403).json(err);
-    });
+ // auth의 정보를 users정보와 공유하여 사용자 관리
+ // auth.Users.uid = (firestore)users.<<<handle?>>>.userId
+ admin
+   .auth()
+   .verifyIdToken(idToken)
+   .then((decodedToken) => {
+     req.user = decodedToken;
+     console.log(decodedToken);
+     return db
+       .collection('users')
+       .where('userId', '==', req.user.uid)
+       .limit(1)
+       .get();
+   })
+   .then((data) => { // get user.hadle, and post to user package
+     req.user.handle = data.docs[0].data().handle;
+     return next();
+   })
+   .catch((err) => {
+     console.error('Error   while verifying token', err);
+     return res.status(403).json(err);
+   });
 };
-
 
 
 // Post one scream
@@ -109,8 +120,8 @@ const isEmail = (email) => {
   else return false;
 };
 
-const isEmpty = (string) => {
-  if (string.trim() === '') return true;
+const isEmpty = (str) => {
+  if (str.trim() === '') return true;
   else return false;
 };
 
@@ -190,34 +201,41 @@ app.post("/signup", (request, response) => {
     });
 });
 
+// login
 app.post('/login', (request, response) => {
   const user = {
-    email: request.body.email,
-    password: request.body.password
+      email: request.body.email,
+      password: request.body.password
   };
 
-  let errors = {};
+  // let errors = {};
 
-  if(isEmpty(user.email)) errors.email = 'Must not be empty';
-  if(isEmpty(user.password)) errors.password = 'Must not be empty';
+  // if(isEmpty(user.email)) errors.email = 'Must not be empty';
+  // if(isEmpty(user.password)) errors.password = 'Must not be empty';
 
-  if(Object.keys(errors).length > 0) return response.status(400).json(errors);
+  // if(Object.keys(errors).length > 0) return response.status(400).json(errors);
 
-  firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-    .then(data => {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(user.email, user.password)
+    .then((data) => {
       return data.user.getIdToken();
     })
-    .then(token => {
-      return response.json({token});
+    .then((token) => {
+      return response.json({ token });
     })
-    .catch((err) =>{
+    .catch((err) => {
       console.error(err);
-      if(err.code === 'auth/wrong-password') {
-          return response.status(403).json({ general: 'Wrong credentials, please try again'});
-      } else {
-        return response.status(500).json({error: err.code});
-      }
+      if (err.code === 'auth/user-not-found') {
+        return response
+          .status(403)
+          .json({ general: 'Wrong user email, please try again' });
+      } else if (err.code === "auth/wrong-password") {
+        return res
+          .status(403)
+          .json({ general: "Wrong credentials, please try again" });
+      } else
+          return response.status(500).json({ error: err.code });
     });
 });
-
 exports.api = functions.region('asia-northeast3').https.onRequest(app);
