@@ -71,7 +71,9 @@ const noImg = 'no-img.png';
       if (err.code === "auth/email-already-in-use") {
         return response.status(400).json({ email: "email is already exist" });
       } else {
-        return response.status(500).json({ error: err.code });
+        // return response.status(500).json({ error: err.code });
+        return response.status(500).json({ general: 'something went wrong , please try again' });
+
       }
     });
 }
@@ -95,11 +97,16 @@ exports.login = (request, response) => {
     })
     .catch((err) =>{
       console.error(err);
-      if(err.code === 'auth/wrong-password') {
-          return response.status(403).json({ general: 'Wrong credentials, please try again'});
-      } else {
-        return response.status(500).json({error: err.code});
-      }
+      // auth/wrong-password
+      // auth/user- not-found
+      // if(err.code === 'auth/wrong-password') {
+      //     return response.status(403).json({ general: 'Wrong credentials, please try again'});
+      // } else {
+      //   return response.status(500).json({error: err.code});
+      // }
+      return response
+        .status(403)
+        .json({ general: 'Wrong credentials, please try again'});
     });
 }
 
