@@ -103,7 +103,7 @@ exports.login = (request, response) => {
     });
 }
 
-// get any user's details
+// Get any user's details
 exports.getUserDetails = (require, response) => {
   let userData = {};
   db.doc(`/user/${request.params.handle}`).get()
