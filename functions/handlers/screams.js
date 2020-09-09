@@ -130,7 +130,7 @@ exports.commentOnScream = (request, response) => {
 };
 
 // Like a scream
-exports.likeScream = (request, response ) => {
+exports.likeScream = (req, res) => {
   const likeDocument = db
     .collection('likes')
     .where('userHandle', '==', req.user.handle)
