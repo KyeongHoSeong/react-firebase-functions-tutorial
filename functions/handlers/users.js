@@ -263,7 +263,7 @@ exports.uploadImage = (request, response) => {
   busboy.end(request.rawBody);
 };
 
-
+// 12-03
 exports.markNotificationsRead = (req, res) => {
   let batch = db.batch();
   req.body.forEach((notificationId) => {
