@@ -57,7 +57,7 @@ exports.api = functions.region('asia-northeast3').https.onRequest(app);
 //tirggers
 
 exports.createNotificationOnLike = functions
-  .region('europe-west1')
+  .region('asia-northeast3')
   .firestore.document('likes/{id}')
   .onCreate((snapshot) => {
     return db
@@ -81,7 +81,7 @@ exports.createNotificationOnLike = functions
       .catch((err) => console.error(err));
   });
 exports.deleteNotificationOnUnLike = functions
-  .region('europe-west1')
+  .region('asia-northeast3')
   .firestore.document('likes/{id}')
   .onDelete((snapshot) => {
     return db
@@ -93,7 +93,7 @@ exports.deleteNotificationOnUnLike = functions
       });
   });
 exports.createNotificationOnComment = functions
-  .region('europe-west1')
+  .region('asia-northeast3')
   .firestore.document('comments/{id}')
   .onCreate((snapshot) => {
     return db
@@ -121,7 +121,7 @@ exports.createNotificationOnComment = functions
   });
 
 exports.onUserImageChange = functions
-  .region('europe-west1')
+  .region('asia-northeast3')
   .firestore.document('/users/{userId}')
   .onUpdate((change) => {
     console.log(change.before.data());
@@ -143,8 +143,9 @@ exports.onUserImageChange = functions
     } else return true;
   });
 
+  //onScreamDelete
 exports.onScreamDelete = functions
-  .region('europe-west1')
+  .region('asia-northeast3')
   .firestore.document('/screams/{screamId}')
   .onDelete((snapshot, context) => {
     const screamId = context.params.screamId;

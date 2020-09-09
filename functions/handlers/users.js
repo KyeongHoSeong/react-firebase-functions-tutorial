@@ -248,14 +248,14 @@ exports.uploadImage = (request, response) => {
           metadata: {
             contentType: imageToBeUploaded.mimetype,
             //Generate token to be appended to imageUrl
-            //firebaseStorageDownloadTokens: generatedToken,
+            firebaseStorageDownloadTokens: generatedToken,
           },
         },
       })
       .then(() => {
         // Append token to url
-        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
-        //const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media&token=${generatedToken}`;
+        //const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
+        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media&token=${generatedToken}`;
         //return db.doc(`/users/${request.user.handle}`).update({ imageUrl: imageUrl });
         return db.doc(`/users/${request.user.handle}`).update({ imageUrl });
       })
