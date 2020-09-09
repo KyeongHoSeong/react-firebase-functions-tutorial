@@ -103,17 +103,17 @@ exports.login = (request, response) => {
     });
 }
   
-exports.getAuthenticatedUser = (req, res) => {
+exports.getAuthenticatedUser = (request, response) => {
   let userData = {};
 
-  db.doc(`/users/${req.user.handle}`)
+  db.doc(`/users/${request.user.handle}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
         userData.credentials = doc.data();
         return db
           .collection("likes")
-          .where("userHandle", "==", req.user.handle)
+          .where("userHandle", "==", request.user.handle)
           .get();
       }
     })
@@ -122,27 +122,13 @@ exports.getAuthenticatedUser = (req, res) => {
       data.forEach((doc) => {
         userData.likes.push(doc.data());
       });
-      
+      return response.json(userData);
     })
     .catch((err) => {
       console.error(err);
-      return res.status(500).json({ error: err.code });
+      return response.status(500).json({ error: err.code });
     });
 };
-
-// exports.addUserDetails = (request, response) => {
-//   let userDetails = reduceUserDetails(req.body);
-
-//   db.doc(`/users/${req.user.handle}`)
-//      .update(userDetails)
-//     .then(() => {
-//       return res.json({message: 'Details added successufly'});
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       return res.status(500).json({error: err.code});
-//     });
-// };
 
 
 // Add user details

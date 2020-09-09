@@ -33,7 +33,7 @@ const userDetails = {
         website: '...',
         location: 'London, UK'
     },
-    likdes: [
+    likes: [
         {
             userHandle: 'user',
             screamId: 'hBtzxbJ9hdTL1HPPGuQ6'
