@@ -19,6 +19,15 @@ let db = {
             likeCounter: 5,
             commentCount: 2
         }
+    ],
+    comments: [
+        {
+            userHandle: 'user',
+            screamId: 'hBtzxbJ9hdTL1HPPGuQ6',
+            body: 'nice on',
+            createdAt: "2020-09-07T23:17:12.788Z"
+
+        }
     ]
 };
 
@@ -26,7 +35,7 @@ const userDetails = {
     credentials: {
         userId: 'QvX8wAMKzIUEBucLm8yVq89vi2C2', //uid
         email: 'user@email.com',
-         handle: 'user',
+        handle: 'user',
         createdAt: "2020-09-07T23:17:12.788Z",
         imageUrl: '/image/dsaffdddfflld/dlddldldl',
         bio: 'hello....',

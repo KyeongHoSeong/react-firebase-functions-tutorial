@@ -1,29 +1,29 @@
-[debug] [2020-09-09T00:37:02.829Z] ----------------------------------------------------------------------
-[debug] [2020-09-09T00:37:02.836Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Polaris\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
-[debug] [2020-09-09T00:37:02.837Z] CLI Version:   8.10.0
-[debug] [2020-09-09T00:37:02.837Z] Platform:      win32
-[debug] [2020-09-09T00:37:02.837Z] Node Version:  v14.9.0
-[debug] [2020-09-09T00:37:02.840Z] Time:          Wed Sep 09 2020 09:37:02 GMT+0900 (대한민국 표준시)
-[debug] [2020-09-09T00:37:02.841Z] ----------------------------------------------------------------------
-[debug] [2020-09-09T00:37:02.841Z] 
-[debug] [2020-09-09T00:37:02.864Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-09-09T00:37:02.866Z] > authorizing via signed-in user
-[debug] [2020-09-09T00:37:02.866Z] [iam] checking project firereact-f2000 for permissions ["firebase.projects.get"]
-[debug] [2020-09-09T00:37:02.879Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/firereact-f2000:testIamPermissions  
+[debug] [2020-09-09T01:49:40.502Z] ----------------------------------------------------------------------
+[debug] [2020-09-09T01:49:40.504Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Polaris\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-09-09T01:49:40.505Z] CLI Version:   8.10.0
+[debug] [2020-09-09T01:49:40.505Z] Platform:      win32
+[debug] [2020-09-09T01:49:40.505Z] Node Version:  v14.9.0
+[debug] [2020-09-09T01:49:40.506Z] Time:          Wed Sep 09 2020 10:49:40 GMT+0900 (대한민국 표준시)
+[debug] [2020-09-09T01:49:40.506Z] ----------------------------------------------------------------------
+[debug] [2020-09-09T01:49:40.506Z] 
+[debug] [2020-09-09T01:49:40.515Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-09T01:49:40.516Z] > authorizing via signed-in user
+[debug] [2020-09-09T01:49:40.516Z] [iam] checking project firereact-f2000 for permissions ["firebase.projects.get"]
+[debug] [2020-09-09T01:49:40.521Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/firereact-f2000:testIamPermissions  
  {"permissions":["firebase.projects.get"]}
-[debug] [2020-09-09T00:37:03.767Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Sep 2020 00:37:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=583","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2020-09-09T00:37:03.771Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/firereact-f2000  
+[debug] [2020-09-09T01:49:41.344Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Sep 2020 01:49:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=575","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-09T01:49:41.346Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/firereact-f2000  
  
-[debug] [2020-09-09T00:37:04.329Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Sep 2020 00:37:04 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-09T01:49:41.917Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Sep 2020 01:49:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
 [info] 
 [info] === Serving from 'C:\DevProjects\experimental-spirit\react-firebase-functions-tutorial'...
 [info] 
 [warn] !  Your requested "node" version "10" doesn't match your global version "14" {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"10\" doesn't match your global version \"14\""}}
-[debug] [2020-09-09T00:37:04.367Z] defaultcredentials: writing to file C:\Users\Polaris\AppData\Roaming\firebase\dasomaru_gmail_com_application_default_credentials.json
-[debug] [2020-09-09T00:37:04.371Z] Setting GAC to C:\Users\Polaris\AppData\Roaming\firebase\dasomaru_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\Polaris\\AppData\\Roaming\\firebase\\dasomaru_gmail_com_application_default_credentials.json"}}
+[debug] [2020-09-09T01:49:41.948Z] defaultcredentials: writing to file C:\Users\Polaris\AppData\Roaming\firebase\dasomaru_gmail_com_application_default_credentials.json
+[debug] [2020-09-09T01:49:41.950Z] Setting GAC to C:\Users\Polaris\AppData\Roaming\firebase\dasomaru_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\Polaris\\AppData\\Roaming\\firebase\\dasomaru_gmail_com_application_default_credentials.json"}}
 [info] i  functions: Watching "C:\DevProjects\experimental-spirit\react-firebase-functions-tutorial\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\DevProjects\\experimental-spirit\\react-firebase-functions-tutorial\\functions\" for Cloud Functions..."}}
-[debug] [2020-09-09T00:37:04.426Z] [worker-pool] addWorker(~diagnostic~) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(~diagnostic~)"}}
-[debug] [2020-09-09T00:37:04.427Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key ~diagnostic~, total=1"}}
-[debug] [2020-09-09T00:37:04.428Z] [worker-pool] submitWork(triggerId=) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=)"}}
-[debug] [2020-09-09T00:37:04.429Z] [worker-~diagnostic~-df576c14-1ffa-46fd-9c9e-c0aec04597c2]: Assigning socketPath: \\?\pipe\C:\DevProjects\experimental-spirit\react-firebase-functions-tutorial\functions\10308 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-df576c14-1ffa-46fd-9c9e-c0aec04597c2]: Assigning socketPath: \\\\?\\pipe\\C:\\DevProjects\\experimental-spirit\\react-firebase-functions-tutorial\\functions\\10308"}}
-[debug] [2020-09-09T00:37:04.430Z] [worker-~diagnostic~-df576c14-1ffa-46fd-9c9e-c0aec04597c2]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-df576c14-1ffa-46fd-9c9e-c0aec04597c2]: BUSY"}}
+[debug] [2020-09-09T01:49:41.984Z] [worker-pool] addWorker(~diagnostic~) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(~diagnostic~)"}}
+[debug] [2020-09-09T01:49:41.984Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key ~diagnostic~, total=1"}}
+[debug] [2020-09-09T01:49:41.985Z] [worker-pool] submitWork(triggerId=) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=)"}}
+[debug] [2020-09-09T01:49:41.985Z] [worker-~diagnostic~-e8f35784-11e1-4477-b335-842d04669cb0]: Assigning socketPath: \\?\pipe\C:\DevProjects\experimental-spirit\react-firebase-functions-tutorial\functions\9368 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-e8f35784-11e1-4477-b335-842d04669cb0]: Assigning socketPath: \\\\?\\pipe\\C:\\DevProjects\\experimental-spirit\\react-firebase-functions-tutorial\\functions\\9368"}}
+[debug] [2020-09-09T01:49:41.986Z] [worker-~diagnostic~-e8f35784-11e1-4477-b335-842d04669cb0]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-e8f35784-11e1-4477-b335-842d04669cb0]: BUSY"}}
