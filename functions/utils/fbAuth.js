@@ -30,6 +30,7 @@ module.exports = (request, response, next) => {
      })
      .then((data) => { // get user.hadle, and post to user package
         request.user.handle = data.docs[0].data().handle;
+        request.user.imageUrl = data.docs[0].data().imageUrl;
        return next();
      })
      .catch((err) => {

@@ -5,10 +5,11 @@ const app = require('express')();
 const FBAuth = require('./utils/fbAuth');
 
 const {
-    getComment,
+//    debugRoute,
   getAllScreams,
   postOneScream,
   getScream,
+  commentOnScream,
 } = require("./handlers/screams");
 
 const {
@@ -19,11 +20,12 @@ const {
   getAuthenticatedUser,
 } = require("./handlers/users");
 //
-app.get('/comment', getComment);
+//app.get('/debuger', debugRoute);
 // screams routes
 app.get('/screams', getAllScreams) 
 app.post('/scream', FBAuth, postOneScream);
 app.get('/scream/:screamId', FBAuth, getScream );
+app.post('/scream:screamId/comment', FBAuth, commentOnScream);
 //ToDo: 
 //delete
 // like a scream

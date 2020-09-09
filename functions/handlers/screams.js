@@ -90,61 +90,62 @@ exports.getScream = (request, response) => {
 };
 
 
-// Fetch one scream
-exports.getComment = (request, response) => {
-  let commentData = {};
+// // Debugger
+// exports.debugRoute = (request, response) => {
+//   let commentData = {};
 
-  db
-  .collection('comments')
-  .where('screamId', '==', 'hBtzxbJ9hdTL1HPPGuQ6')
-  .get()
-  .then((data) => {
-    commentData.comments = [];
-      data.forEach((doc) => {
-        commentData.comments.push(doc.data());
-      });
-      return response.json(commentData);
-    })
-    .catch((err) => {
-      console.error(err);
-      response.status(500).json({ error: err.code });
-    });
-};
+//   db
+//   .collection('comments')
+//   .where('screamId', '==', 'hBtzxbJ9hdTL1HPPGuQ6')
+//   .get()
+//   .then((data) => {
+//     commentData.comments = [];
+//       data.forEach((doc) => {
+//         commentData.comments.push(doc.data());
+//       });
+//       return response.json(commentData);
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       response.status(500).json({ error: err.code });
+//     });
+// };
 
 
 // Comment on a comment
-exports.commentOnScream = (req, res) => {
-  if (req.body.body.trim() === '')
+exports.commentOnScream = (request, response) => {
+  if (request.body.body.trim() === '')
     return res.status(400).json({ comment: 'Must not be empty' });
 
   const newComment = {
-    body: req.body.body,
+    body: request.body.body,
     createdAt: new Date().toISOString(),
-    screamId: req.params.screamId,
-    userHandle: req.user.handle,
-    userImage: req.user.imageUrl
+    screamId: request.params.screamId,
+    userHandle: request.user.handle,
+    userImage: request.user.imageUrl
   };
-  console.log(newComment);
-
-  db.doc(`/screams/${req.params.screamId}`)
+  
+  db.doc(`/screams/${request.params.screamId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: 'Scream not found' });
+        return response.status(404).json({ error: 'Scream not found' });
       }
-      return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
-    })
-    .then(() => {
       return db.collection('comments').add(newComment);
+      //return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+    // })
+    // .then(() => {
+    //   return db.collection('comments').add(newComment);
     })
     .then(() => {
-      res.json(newComment);
+      response.json(newComment);
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ error: 'Something went wrong' });
+      response.status(500).json({ error: 'Something went wrong' });
     });
 };
+
 // Like a scream
 exports.likeScream = (req, res) => {
   const likeDocument = db
