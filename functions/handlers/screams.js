@@ -39,15 +39,21 @@ exports.postOneScream = (request, response) => {
     body: request.body.body,
     //userHandle: request.body.userHandle,
     userHandle: request.user.handle,
+    userImage: request.user.imageUrl,
     //createdAt: admin.firestore.Timestamp.fromDate(new Date()),
-    uceatedAt: new Date().toISOString()
+    uceatedAt: new Date().toISOString(),
+    likecount: 0,
+    commentCount: 0
   };
 
   db
     .collection("screams")
     .add(newScream)
     .then((doc) => {
-      response.json({ message: `document ${doc.id} cteated successfully` });
+      const resScream = newScream;
+      resScream.screamId = doc.id;
+      //response.json({ message: `document ${doc.id} cteated successfully` });
+      response.json(resScream);
     })
     .catch((err) => {
       response.status(500).json({ error: "something went wrong" });
@@ -89,29 +95,6 @@ exports.getScream = (request, response) => {
     });
 };
 
-
-// // Debugger
-// exports.debugRoute = (request, response) => {
-//   let commentData = {};
-
-//   db
-//   .collection('comments')
-//   .where('screamId', '==', 'hBtzxbJ9hdTL1HPPGuQ6')
-//   .get()
-//   .then((data) => {
-//     commentData.comments = [];
-//       data.forEach((doc) => {
-//         commentData.comments.push(doc.data());
-//       });
-//       return response.json(commentData);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       response.status(500).json({ error: err.code });
-//     });
-// };
-
-
 // Comment on a comment
 exports.commentOnScream = (request, response) => {
   if (request.body.body.trim() === '')
@@ -131,11 +114,11 @@ exports.commentOnScream = (request, response) => {
       if (!doc.exists) {
         return response.status(404).json({ error: 'Scream not found' });
       }
-      return db.collection('comments').add(newComment);
-      //return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
-    // })
-    // .then(() => {
-    //   return db.collection('comments').add(newComment);
+      //return db.collection('comments').add(newComment);
+      return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+     })
+     .then(() => {
+       return db.collection('comments').add(newComment);
     })
     .then(() => {
       response.json(newComment);
@@ -147,7 +130,7 @@ exports.commentOnScream = (request, response) => {
 };
 
 // Like a scream
-exports.likeScream = (req, res) => {
+exports.likeScream = (request, response ) => {
   const likeDocument = db
     .collection('likes')
     .where('userHandle', '==', req.user.handle)
