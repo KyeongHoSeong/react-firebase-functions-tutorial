@@ -5,7 +5,11 @@ const config = require('../utils/config');
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
-const { validateSignupData, validateLoginData } = require('../utils/validators');
+const {
+  validateSignupData,
+  validateLoginData,
+  validateUserDetails,
+} = require("../utils/validators");
 const { UserRecordMetadata } = require('firebase-functions/lib/providers/auth');
 const { request } = require('http');
 
@@ -126,22 +130,38 @@ exports.getAuthenticatedUser = (req, res) => {
     });
 };
 
-exports.addUserDetails = (request, response) => {
-  let userDetails = reduceUserDetails(req.body);
+// exports.addUserDetails = (request, response) => {
+//   let userDetails = reduceUserDetails(req.body);
 
-  db.doc(`/users/${req.user.handle}`).update(userDetails)
+//   db.doc(`/users/${req.user.handle}`)
+//      .update(userDetails)
+//     .then(() => {
+//       return res.json({message: 'Details added successufly'});
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       return res.status(500).json({error: err.code});
+//     });
+// };
+
+
+// Add user details
+exports.addUserDetails = (request, response) => {
+  let userDetails = validateUserDetails(request.body);
+
+  db.doc(`/users/${request.user.handle}`).update(userDetails)
     .then(() => {
-      return res.json({message: 'Details added successufly'});
+      return response.json({ message: "Details added successfully" });
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
-      return res.status(500).json({error: err.code});
-    });
+      response.status(500).json({ error: err.code });
+    }); 
 };
 
 // Upload a profile image for user
 // npm install --save busboy, at functions
-exports.uploadImage = (request, respose) => {
+exports.uploadImage = (request, response) => {
   const BusBoy = require("busboy");
   const path = require("path");
   const os = require("os");
